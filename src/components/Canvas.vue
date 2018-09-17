@@ -1,8 +1,8 @@
 <template>
   <div class="columns">
-    <div v-for="x in canvasProps.x" :key="x" class="column">
-      <div v-for="y in canvasProps.y" :key="y">
-        <Pixel :number="(canvasProps.x * y) - (canvasProps.x - x)" />
+    <div v-for="x in canvasX" :key="x" class="column">
+      <div v-for="y in canvasY" :key="y">
+        <Pixel :number="(canvasX * y) - (canvasX - x)" />
       </div>
     </div>
   </div>
@@ -10,7 +10,7 @@
 
 <script>
 import Pixel from '@/components/Pixel.vue'
-import { canvasProps } from '@/components/mixins/canvasProps.js'
+import canvasProps from '@/components/mixins/canvasProps.js'
 
 export default {
   name: 'Canvas',

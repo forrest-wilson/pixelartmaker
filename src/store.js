@@ -8,17 +8,29 @@ export default new Vuex.Store({
     canvas: {
       x: 16,
       y: 16
-    }
+    },
+    brushColor: 'red'
   },
   mutations: {
-    SET_CANVAS_DIMS ({ canvas }, { x, y }) {
-      if (x) canvas.x = x
-      if (y) canvas.y = y
+    SET_CANVAS_X ({ canvas }, val) {
+      canvas.x = parseInt(val)
+    },
+    SET_CANVAS_Y ({ canvas }, val) {
+      canvas.y = parseInt(val)
+    },
+    SET_BRUSH_COLOR (state, color) {
+      state.brushColor = color
     }
   },
   actions: {
-    setCanvasDims ({ commit }, payload) {
-      commit('SET_CANVAS_DIMS', payload)
+    setCanvasX ({ commit }, val) {
+      commit('SET_CANVAS_X', val)
+    },
+    setCanvasY ({ commit }, val) {
+      commit('SET_CANVAS_Y', val)
+    },
+    setBrushColor ({ commit }, color) {
+      commit('SET_BRUSH_COLOR', color)
     }
   }
 })

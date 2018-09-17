@@ -3,9 +3,12 @@
 </template>
 
 <script>
+import brushColor from '@/components/mixins/brushColor.js'
+
 export default {
   name: 'Pixel',
   props: ['number'],
+  mixins: [brushColor],
   data () {
     return {
       color: '#fff',
@@ -14,11 +17,17 @@ export default {
   },
   methods: {
     changeColor () {
-      this.color = 'blue'
+      this.color = this.brushColor
+    },
+    updateDims () {
+      this.width = this.$el.clientWidth
     }
   },
   mounted () {
-    this.width = this.$el.clientWidth
+    this.updateDims()
+  },
+  updated () {
+    this.updateDims()
   }
 }
 </script>

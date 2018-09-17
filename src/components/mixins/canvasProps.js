@@ -1,11 +1,19 @@
-export const canvasProps = {
+export default {
   computed: {
-    canvasProps: {
+    canvasX: {
       get () {
-        return this.$store.state.canvas
+        return this.$store.state.canvas.x
       },
-      set (dims) {
-        this.$store.dispatch('setCanvasDims', dims)
+      set (val) {
+        this.$store.dispatch('setCanvasX', val)
+      }
+    },
+    canvasY: {
+      get () {
+        return this.$store.state.canvas.y
+      },
+      set (val) {
+        this.$store.dispatch('setCanvasY', val)
       }
     }
   }

@@ -1,18 +1,40 @@
 <template>
   <div class="sidebar">
+    <div class="field">
+      <label class="label">Pixels Wide (x)</label>
+      <div class="control">
+        <input class="input" type="number" placeholder="Enter a number" min="1" max="64" v-model="canvasX">
+      </div>
+    </div>
 
+    <div class="field">
+      <label class="label">Pixels High (y)</label>
+      <div class="control">
+        <input class="input" type="number" placeholder="Enter a number" min="1" max="64" v-model="canvasY">
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Brush Color (HEX)</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Enter a number" v-model="brushColor">
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import canvasProps from '@/components/mixins/canvasProps.js'
+import brushColor from '@/components/mixins/brushColor.js'
+
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  mixins: [canvasProps, brushColor]
 }
 </script>
 
 <style lang="scss" scoped>
 .sidebar {
   height: 80px;
-  background-color: red;
 }
 </style>
