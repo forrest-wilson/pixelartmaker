@@ -9,7 +9,7 @@ export default new Vuex.Store({
       x: 16,
       y: 16
     },
-    brushColor: 'red'
+    brushColor: '#fff'
   },
   mutations: {
     SET_CANVAS_X ({ canvas }, val) {

@@ -1,7 +1,7 @@
 <template>
   <div class="columns">
     <div v-for="x in canvasX" :key="x" class="column">
-      <div v-for="y in canvasY" :key="y">
+      <div v-for="y in canvasY" :key="(canvasX * y) - (canvasX - x)">
         <Pixel :number="(canvasX * y) - (canvasX - x)" />
       </div>
     </div>

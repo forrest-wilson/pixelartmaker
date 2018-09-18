@@ -15,11 +15,16 @@
     </div>
 
     <div class="field">
-      <label class="label">Brush Color (HEX)</label>
+      <label class="label">Brush Color</label>
       <div class="control">
         <input class="input" type="text" placeholder="Enter a number" v-model="brushColor">
       </div>
     </div>
+
+    <label class="checkbox">
+      <input type="checkbox" checked>
+      Grid
+    </label>
   </div>
 </template>
 
