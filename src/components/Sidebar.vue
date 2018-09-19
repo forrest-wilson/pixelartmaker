@@ -40,6 +40,8 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-  height: 80px;
+  background-color: blue;
+  padding: 10px;
+  flex-shrink: 0;
 }
 </style>

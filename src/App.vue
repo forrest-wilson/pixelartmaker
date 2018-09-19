@@ -1,35 +1,34 @@
 <template>
   <div id="app">
-    <div class="container">
-      <section class="section">
-        <div class="columns">
-          <div class="column">
-            <Canvas />
-          </div>
-          <div class="column sidebar-wrapper">
-            <Sidebar />
-          </div>
-        </div>
-      </section>
-    </div>
+    <Toolbar />
+    <main class="main">
+      <Sidebar />
+      <Canvas />
+    </main>
   </div>
 </template>
 
 <script>
+import Toolbar from '@/components/Toolbar.vue'
 import Canvas from '@/components/Canvas.vue'
 import Sidebar from '@/components/Sidebar.vue'
 
 export default {
   name: 'App',
   components: {
+    Toolbar,
     Canvas,
     Sidebar
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.sidebar-wrapper {
-  max-width: 300px;
+<style lang="scss">
+html, body, #app {
+  height: 100%;
+}
+.main {
+  display: flex;
+  height: calc(100% - 45px);
 }
 </style>
