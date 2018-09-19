@@ -26,6 +26,22 @@ export default {
     }
   },
   methods: {
+    init () {
+      for (let i = 0; i < this.$store.state.canvas.x; i++) {
+        for (let j = 0; j < this.$store.state.canvas.y; j++) {
+          this.squares.push({
+            x: (50 * i),
+            y: (50 * j),
+            width: 50,
+            height: 50,
+            stroke: 'black',
+            fill: 'white',
+            strokeWidth: 2,
+            uid: uuid()
+          })
+        }
+      }
+    },
     handleResize () {
       let { clientHeight, clientWidth } = this.$refs['canvas']
       this.configKonva.width = clientWidth
@@ -33,26 +49,14 @@ export default {
     },
     handleClick (shape) {
       const stage = shape.getStage()
-      console.log(stage)
-
-      stage.setFill('red')
+      stage.setFill(this.$store.state.brushColor)
       stage.draw()
     }
   },
   mounted () {
     window.addEventListener('resize', this.handleResize)
     this.handleResize()
-    for (let i = 0; i < 16; i++) {
-      this.squares.push({
-        x: (25 * i),
-        y: 0,
-        width: 25,
-        height: 25,
-        stroke: 'black',
-        strokeWidth: 2,
-        uid: uuid()
-      })
-    }
+    this.init()
   }
 }
 </script>
