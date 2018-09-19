@@ -11,6 +11,6 @@ export default {
 <style lang="scss">
 .toolbar {
   height: 45px;
-  background-color: red;
+  background-color: rgb(37, 37, 37);
 }
 </style>

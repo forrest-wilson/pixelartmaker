@@ -14,17 +14,21 @@
       </div>
     </div>
 
-    <div class="field">
-      <label class="label">Brush Color</label>
+    <label class="label">Brush Color</label>
+    <div class="field has-addons">
       <div class="control">
-        <input class="input" type="text" placeholder="Enter a number" v-model="brushColor">
+        <a class="button is-static" :style="{ 'color': brushColor, 'background-color': brushColor }">#</a>
+      </div>
+      <div class="control">
+        <input class="input" type="text" placeholder="Enter a color" v-model="brushColor">
       </div>
     </div>
 
-    <label class="checkbox">
-      <input type="checkbox" checked>
-      Grid
-    </label>
+    <div class="field">
+      <div class="control">
+        <button class="button is-danger">Clear Grid</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,7 +44,7 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
-  background-color: blue;
+  background-color: white;
   padding: 10px;
   flex-shrink: 0;
 }

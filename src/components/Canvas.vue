@@ -64,7 +64,7 @@ export default {
 <style lang="scss">
 .canvas {
   flex-grow: 1;
-  background-color: #555;
+  background-color: #e5e5e5;
 }
 
 .konvajs-content {
