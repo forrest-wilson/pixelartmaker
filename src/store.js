@@ -9,7 +9,8 @@ export default new Vuex.Store({
       x: 16,
       y: 16
     },
-    brushColor: '#fff'
+    brushColor: '#fff',
+    squares: []
   },
   mutations: {
     SET_CANVAS_X ({ canvas }, val) {
@@ -20,6 +21,14 @@ export default new Vuex.Store({
     },
     SET_BRUSH_COLOR (state, color) {
       state.brushColor = color
+    },
+    SET_SQUARES (state, squares) {
+      state.squares = squares
+      console.log('state squares')
+      console.log(state.squares)
+    },
+    SET_SQUARE (state, { square, index }) {
+      state.squares[index] = square
     }
   },
   actions: {
@@ -31,6 +40,15 @@ export default new Vuex.Store({
     },
     setBrushColor ({ commit }, color) {
       commit('SET_BRUSH_COLOR', color)
+    },
+    setSquares ({ commit }, val) {
+      commit('SET_SQUARES', val)
+    },
+    setSquare ({ commit }, stage) {
+      commit('SET_SQUARE', stage)
     }
+  },
+  getters: {
+    getCanvasDims: state => state.canvas
   }
 })

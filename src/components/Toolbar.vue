@@ -5,11 +5,14 @@
 </template>
 
 <script>
+import squares from '@/components/mixins/squares.js'
+
 export default {
   name: 'Toolbar',
+  mixins: [squares],
   methods: {
     exportToJson () {
-      console.log('clicked')
+      console.log(this.offlineSquares)
     }
   }
 }
