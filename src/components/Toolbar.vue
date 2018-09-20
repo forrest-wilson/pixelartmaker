@@ -1,10 +1,17 @@
 <template>
-  <div class="toolbar"></div>
+  <div class="toolbar">
+    <button class="button nav-item" @click="exportToJson">Export to JSON</button>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Toolbar'
+  name: 'Toolbar',
+  methods: {
+    exportToJson () {
+      console.log('clicked')
+    }
+  }
 }
 </script>
 

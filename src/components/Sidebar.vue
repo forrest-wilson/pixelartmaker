@@ -3,21 +3,21 @@
     <div class="field">
       <label class="label">Pixels Wide (x)</label>
       <div class="control">
-        <input class="input" type="number" placeholder="Enter a number" min="1" max="64" v-model="canvasX">
+        <input class="input" type="number" placeholder="Enter a number" min="1" v-model="canvasX">
       </div>
     </div>
 
     <div class="field">
       <label class="label">Pixels High (y)</label>
       <div class="control">
-        <input class="input" type="number" placeholder="Enter a number" min="1" max="64" v-model="canvasY">
+        <input class="input" type="number" placeholder="Enter a number" min="1" v-model="canvasY">
       </div>
     </div>
 
     <label class="label">Brush Color</label>
     <div class="field has-addons">
       <div class="control">
-        <a class="button is-static" :style="{ 'color': brushColor, 'background-color': brushColor }">#</a>
+        <a class="button is-static" :style="{ 'color': brushColor, 'background-color': brushColor }"></a>
       </div>
       <div class="control">
         <input class="input" type="text" placeholder="Enter a color" v-model="brushColor">

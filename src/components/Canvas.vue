@@ -27,8 +27,8 @@ export default {
   },
   methods: {
     init () {
-      for (let i = 0; i < this.$store.state.canvas.x; i++) {
-        for (let j = 0; j < this.$store.state.canvas.y; j++) {
+      for (let i = 0; i < this.canvasX; i++) {
+        for (let j = 0; j < this.canvasY; j++) {
           this.squares.push({
             x: (50 * i),
             y: (50 * j),
