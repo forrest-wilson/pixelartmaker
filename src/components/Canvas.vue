@@ -1,6 +1,6 @@
 <template>
   <div class="canvas" ref="canvas">
-    <v-stage :config="configKonva" ref="stage">
+    <v-stage :config="konvaConfig" ref="stage">
       <v-layer ref="layer">
         <v-rect v-for="square in squares" :key="square.uid" :config="square" @click="handleClick"></v-rect>
       </v-layer>
@@ -19,7 +19,7 @@ export default {
   mixins: [canvasProps, squares],
   data () {
     return {
-      configKonva: {
+      konvaConfig: {
         width: 0,
         height: 0,
         draggable: true
@@ -62,8 +62,8 @@ export default {
     },
     handleResize () {
       let { clientHeight, clientWidth } = this.$refs['canvas']
-      this.configKonva.width = clientWidth
-      this.configKonva.height = clientHeight
+      this.konvaConfig.width = clientWidth
+      this.konvaConfig.height = clientHeight
     },
     handleClick (shape) {
       const stage = shape.getStage()
