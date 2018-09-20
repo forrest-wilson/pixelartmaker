@@ -19,6 +19,12 @@ export default {
     Toolbar,
     Canvas,
     Sidebar
+  },
+  mounted () {
+    // Disable window scrolling
+    window.addEventListener('wheel', evt => {
+      evt.preventDefault()
+    })
   }
 }
 </script>
