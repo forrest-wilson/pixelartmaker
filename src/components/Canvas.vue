@@ -52,7 +52,7 @@ export default {
             height: multi,
             stroke: 'black',
             fill: 'white',
-            strokeWidth: 2,
+            strokeWidth: 1,
             uid: uuid()
           }
 
@@ -75,16 +75,17 @@ export default {
       if (deltaY) {
         const stage = this.$refs['layer'].getStage()
         let opts = {}
+        let factor = 0.1
 
         if (deltaY > 0) {
           // Increase scale by 1
-          opts.x = stage.scaleX() + 1
-          opts.y = stage.scaleY() + 1
+          opts.x = stage.scaleX() + factor
+          opts.y = stage.scaleY() + factor
         } else {
           // Reduce scale by 1 if it isn't 1 already
           if (stage.attrs.scaleX > 1 || stage.attrs.scaleY > 1) {
-            opts.x = stage.scaleX() - 1
-            opts.y = stage.scaleY() - 1
+            opts.x = stage.scaleX() - factor
+            opts.y = stage.scaleY() - factor
           }
         }
 
@@ -98,6 +99,7 @@ export default {
     this.$refs['canvas'].addEventListener('wheel', this.handleScroll)
     this.handleResize()
     this.init(this.canvasDims.x, this.canvasDims.y)
+    console.log(this.$refs)
   }
 }
 </script>
