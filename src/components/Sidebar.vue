@@ -47,5 +47,6 @@ export default {
   background-color: white;
   padding: 10px;
   flex-shrink: 0;
+  border-right: 1px solid lightgrey;
 }
 </style>
