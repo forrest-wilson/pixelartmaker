@@ -39,9 +39,14 @@ export default {
     canvasY () {
       this.init(this.canvasX, this.canvasY)
     },
-    getJsonSquares () {
-      Konva.Node.create(this.jsonSquares, this.$refs.stage)
-      // this.init()
+    jsonSquares () {
+      let importedObject = JSON.parse(this.jsonSquares)
+      console.log(importedObject)
+      this.squareProps.length = 0
+      for (let i = 0; i < importedObject.children[0].children.length; i++) {
+        let child = importedObject.children[0].children[i]
+        this.squareProps.push(child.attrs)
+      }
     }
   },
   methods: {
