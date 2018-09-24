@@ -33,12 +33,37 @@
 </template>
 
 <script>
-import canvasProps from '@/components/mixins/canvasProps.js'
 import brushColor from '@/components/mixins/brushColor.js'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Sidebar',
-  mixins: [canvasProps, brushColor]
+  mixins: [brushColor],
+  computed: {
+    ...mapGetters(['getCanvasX', 'getCanvasY']),
+    canvasX: {
+      get () {
+        return this.getCanvasX
+      },
+      set (val) {
+        this.setCanvasX(val)
+      }
+    },
+    canvasY: {
+      get () {
+        return this.getCanvasY
+      },
+      set (val) {
+        this.setCanvasY(val)
+      }
+    }
+  },
+  methods: {
+    ...mapActions([
+      'setCanvasX',
+      'setCanvasY'
+    ])
+  }
 }
 </script>
 

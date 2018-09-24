@@ -2,48 +2,48 @@
   <div class="canvas" ref="canvas">
     <v-stage :config="konvaConfig" ref="stage">
       <v-layer ref="layer">
-        <v-rect v-for="square in squares" :key="square.uid" :config="square" @click="handleClick"></v-rect>
+        <v-rect v-for="square in squareProps" :key="square.uid" :config="square" @click="handleClick"></v-rect>
       </v-layer>
     </v-stage>
   </div>
 </template>
 
 <script>
-import canvasProps from '@/components/mixins/canvasProps.js'
-import squares from '@/components/mixins/squares.js'
 import uuid from 'uuid'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Canvas',
-  mixins: [canvasProps, squares],
   data () {
     return {
       konvaConfig: {
         width: 0,
         height: 0,
         draggable: true
-      }
+      },
+      squareProps: []
     }
   },
   computed: {
     ...mapGetters({
-      canvasDims: 'getCanvasDims'
+      canvasX: 'getCanvasX',
+      canvasY: 'getCanvasY',
+      brushColor: 'getBrushColor'
     })
   },
   watch: {
     canvasX () {
-      this.init()
+      this.init(this.canvasX, this.canvasY)
     },
     canvasY () {
-      this.init()
+      this.init(this.canvasX, this.canvasY)
     }
   },
   methods: {
     init (x, y) {
-      this.squares.length = 0
-      for (let i = 0; i < /* this.canvasDims.y */ y; i++) {
-        for (let j = 0; j < /* this.canvasDims.x */ x; j++) {
+      this.squareProps.length = 0
+      for (let i = 0; i < y; i++) {
+        for (let j = 0; j < x; j++) {
           let multi = 25
           let opts = {
             x: (multi * j),
@@ -56,7 +56,7 @@ export default {
             uid: uuid()
           }
 
-          this.squares.push(opts)
+          this.squareProps.push(opts)
         }
       }
     },
@@ -67,9 +67,11 @@ export default {
     },
     handleClick (shape) {
       const stage = shape.getStage()
-      stage.setFill(this.$store.state.brushColor)
+      stage.setFill(this.brushColor)
       stage.draw()
-      console.log(stage)
+      let stageJson = this.$refs.stage.getStage().toJSON()
+      let backToJs = JSON.parse(stageJson)
+      this.$store.dispatch('setJsonSquares', stageJson)
     },
     handleScroll ({ deltaY }) {
       if (deltaY) {
@@ -98,8 +100,7 @@ export default {
     window.addEventListener('resize', this.handleResize)
     this.$refs['canvas'].addEventListener('wheel', this.handleScroll)
     this.handleResize()
-    this.init(this.canvasDims.x, this.canvasDims.y)
-    console.log(this.$refs)
+    this.init(this.canvasX, this.canvasY)
   }
 }
 </script>
