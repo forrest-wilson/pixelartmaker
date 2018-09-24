@@ -26,7 +26,7 @@
 
     <div class="field">
       <div class="control">
-        <button class="button is-danger">Clear Grid</button>
+        <button class="button is-danger" @click="clearGrid">Clear Grid</button>
       </div>
     </div>
   </div>
@@ -62,7 +62,10 @@ export default {
     ...mapActions([
       'setCanvasX',
       'setCanvasY'
-    ])
+    ]),
+    clearGrid () {
+      console.log('clear')
+    }
   }
 }
 </script>

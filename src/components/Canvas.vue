@@ -28,7 +28,8 @@ export default {
     ...mapGetters({
       canvasX: 'getCanvasX',
       canvasY: 'getCanvasY',
-      brushColor: 'getBrushColor'
+      brushColor: 'getBrushColor',
+      jsonSquares: 'getJsonSquares'
     })
   },
   watch: {
@@ -37,6 +38,10 @@ export default {
     },
     canvasY () {
       this.init(this.canvasX, this.canvasY)
+    },
+    getJsonSquares () {
+      Konva.Node.create(this.jsonSquares, this.$refs.stage)
+      // this.init()
     }
   },
   methods: {
@@ -70,7 +75,6 @@ export default {
       stage.setFill(this.brushColor)
       stage.draw()
       let stageJson = this.$refs.stage.getStage().toJSON()
-      let backToJs = JSON.parse(stageJson)
       this.$store.dispatch('setJsonSquares', stageJson)
     },
     handleScroll ({ deltaY }) {

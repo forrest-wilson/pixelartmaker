@@ -6,18 +6,16 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Toolbar',
   methods: {
+    ...mapActions(['setJsonSquares']),
     exportJson () {
-      let dataUri = `data:text/json;charset=utf-8,${encodeURIComponent(this.jsonSquares)}`
-      let exportFileDefaultName = 'data.json'
-
       let el = document.createElement('a')
-      el.setAttribute('href', dataUri)
-      el.setAttribute('download', exportFileDefaultName)
+      el.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(this.jsonSquares)}`)
+      el.setAttribute('download', 'data.json')
       el.click()
     },
     triggerFileLoad () {
@@ -30,8 +28,8 @@ export default {
       console.log('importing JSON')
       let reader = new FileReader()
       reader.onload = () => {
-        let obj = JSON.parse(JSON.parse(reader.result))
-        console.log(obj)
+        let json = JSON.parse(reader.result)
+        this.setJsonSquares(json)
       }
 
       reader.readAsText(target.files[0])
