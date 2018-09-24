@@ -16,7 +16,8 @@ const actions = {
 
 const getters = {
   getSquares: state => state.squares,
-  getJsonSquares: state => state.jsonSquares
+  getJsonSquares: state => state.jsonSquares,
+  getJsonSquaresStringified: state => JSON.stringify(state.jsonSquares)
 }
 
 export default {
