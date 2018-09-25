@@ -29,6 +29,12 @@
         <button class="button is-danger" @click="clearGrid">Clear Grid</button>
       </div>
     </div>
+
+    <div class="field">
+      <div class="control">
+        <button class="button is-info" @click="toggleGrid">Toggle Grid</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,7 +46,11 @@ export default {
   name: 'Sidebar',
   mixins: [brushColor],
   computed: {
-    ...mapGetters(['getCanvasX', 'getCanvasY']),
+    ...mapGetters([
+      'getCanvasX',
+      'getCanvasY',
+      'getJsonSquares'
+    ]),
     canvasX: {
       get () {
         return this.getCanvasX
@@ -59,9 +69,25 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['setCanvasX', 'setCanvasY']),
+    ...mapActions([
+      'setCanvasX',
+      'setCanvasY',
+      'setJsonSquares',
+      'pushNewSquare',
+      'resetSquareProps'
+    ]),
     clearGrid () {
       console.log('clear')
+    },
+    toggleGrid () {
+      this.resetSquareProps()
+      let { children } = JSON.parse(this.getJsonSquares)
+      for (let i = 0; i < children[0].children.length; i++) {
+        let child = children[0].children[i]
+        child.attrs.stroke === 'transparent' ? child.attrs.stroke = 'black' : child.attrs.stroke = 'transparent'
+
+        this.pushNewSquare(child)
+      }
     }
   }
 }

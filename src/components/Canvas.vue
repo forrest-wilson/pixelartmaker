@@ -2,15 +2,14 @@
   <div class="canvas" ref="canvas">
     <v-stage :config="konvaConfig" ref="stage">
       <v-layer ref="layer">
-        <v-rect v-for="square in squareProps" :key="square.uid" :config="square" @click="handleClick"></v-rect>
+        <v-rect v-for="square in squareProps" :key="square.id" :config="square" @click="handleClick"></v-rect>
       </v-layer>
     </v-stage>
   </div>
 </template>
 
 <script>
-import uuid from 'uuid'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Canvas',
@@ -20,8 +19,7 @@ export default {
         width: 0,
         height: 0,
         draggable: true
-      },
-      squareProps: []
+      }
     }
   },
   computed: {
@@ -29,7 +27,8 @@ export default {
       canvasX: 'getCanvasX',
       canvasY: 'getCanvasY',
       brushColor: 'getBrushColor',
-      jsonSquares: 'getJsonSquares'
+      jsonSquares: 'getJsonSquares',
+      squareProps: 'getSquareProps'
     })
   },
   watch: {
@@ -44,13 +43,21 @@ export default {
       this.squareProps.length = 0
       let squares = children[0].children
       for (let i = 0; i < squares.length; i++) {
-        this.squareProps.push(squares[i].attrs)
+        this.pushNewSquare(squares[i].attrs)
       }
+    },
+    squareProps () {
+      console.log('hey')
+      // this.dispatchJsonSquares()
     }
   },
   methods: {
+    ...mapActions([
+      'pushNewSquare',
+      'resetSquareProps'
+    ]),
     async populateReactiveProperty (x, y) {
-      this.squareProps.length = 0
+      this.resetSquareProps()
       for (let i = 0; i < y; i++) {
         for (let j = 0; j < x; j++) {
           let multi = 25
@@ -61,11 +68,10 @@ export default {
             height: multi,
             stroke: 'black',
             fill: 'white',
-            strokeWidth: 1,
-            uid: uuid()
+            strokeWidth: 1
           }
 
-          this.squareProps.push(opts)
+          this.pushNewSquare(opts)
         }
       }
     },
