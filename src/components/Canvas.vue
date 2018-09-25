@@ -69,6 +69,10 @@ export default {
         }
       }
     },
+    dispatchJsonSquares () {
+      let stageJson = this.$refs.stage.getStage().toJSON()
+      this.$store.dispatch('setJsonSquares', stageJson)
+    },
     handleResize () {
       let { clientHeight, clientWidth } = this.$refs.canvas
       this.konvaConfig.width = clientWidth
@@ -78,8 +82,7 @@ export default {
       const stage = shape.getStage()
       stage.setFill(this.brushColor)
       stage.draw()
-      let stageJson = this.$refs.stage.getStage().toJSON()
-      this.$store.dispatch('setJsonSquares', stageJson)
+      this.dispatchJsonSquares()
     },
     handleScroll ({ deltaY }) {
       if (deltaY) {
@@ -108,10 +111,7 @@ export default {
     window.addEventListener('resize', this.handleResize)
     this.$refs.canvas.addEventListener('wheel', this.handleScroll)
     this.handleResize()
-    this.populateReactiveProperty(this.canvasX, this.canvasY).then(() => {
-      let stageJson = this.$refs.stage.getStage().toJSON()
-      this.$store.dispatch('setJsonSquares', stageJson)
-    })
+    this.populateReactiveProperty(this.canvasX, this.canvasY).then(this.dispatchJsonSquares)
   }
 }
 </script>
