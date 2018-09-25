@@ -34,23 +34,22 @@ export default {
   },
   watch: {
     canvasX () {
-      this.init(this.canvasX, this.canvasY)
+      this.populateReactiveProperty(this.canvasX, this.canvasY)
     },
     canvasY () {
-      this.init(this.canvasX, this.canvasY)
+      this.populateReactiveProperty(this.canvasX, this.canvasY)
     },
     jsonSquares () {
       let { children } = JSON.parse(this.jsonSquares)
-      console.log(children[0])
       this.squareProps.length = 0
-      for (let i = 0; i < children[0].children.length; i++) {
-        let child = children[0].children[i]
-        this.squareProps.push(child.attrs)
+      let squares = children[0].children
+      for (let i = 0; i < squares.length; i++) {
+        this.squareProps.push(squares[i].attrs)
       }
     }
   },
   methods: {
-    async init (x, y) {
+    async populateReactiveProperty (x, y) {
       this.squareProps.length = 0
       for (let i = 0; i < y; i++) {
         for (let j = 0; j < x; j++) {
@@ -109,7 +108,7 @@ export default {
     window.addEventListener('resize', this.handleResize)
     this.$refs.canvas.addEventListener('wheel', this.handleScroll)
     this.handleResize()
-    this.init(this.canvasX, this.canvasY).then(() => {
+    this.populateReactiveProperty(this.canvasX, this.canvasY).then(() => {
       let stageJson = this.$refs.stage.getStage().toJSON()
       this.$store.dispatch('setJsonSquares', stageJson)
     })
