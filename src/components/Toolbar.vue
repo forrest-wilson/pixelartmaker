@@ -11,10 +11,13 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Toolbar',
   methods: {
-    ...mapActions(['setJsonSquares']),
+    ...mapActions([
+      'setJsonSquares',
+      'setSquareProps'
+    ]),
     exportJson () {
       let el = document.createElement('a')
-      el.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(this.jsonSquares)}`)
+      el.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.squareProps))}`)
       el.setAttribute('download', 'data.json')
       el.click()
     },
@@ -29,7 +32,8 @@ export default {
       let reader = new FileReader()
       reader.onload = () => {
         let json = JSON.parse(reader.result)
-        this.setJsonSquares(json)
+        this.setSquareProps(json)
+        console.log(json)
       }
 
       reader.readAsText(target.files[0])
@@ -37,7 +41,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      jsonSquares: 'getJsonSquaresStringified'
+      jsonSquares: 'getJsonSquaresStringified',
+      squareProps: 'getSquareProps'
     })
   }
 }

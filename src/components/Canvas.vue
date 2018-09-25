@@ -27,7 +27,6 @@ export default {
       canvasX: 'getCanvasX',
       canvasY: 'getCanvasY',
       brushColor: 'getBrushColor',
-      jsonSquares: 'getJsonSquares',
       squareProps: 'getSquareProps'
     })
   },
@@ -37,24 +36,13 @@ export default {
     },
     canvasY () {
       this.populateReactiveProperty(this.canvasX, this.canvasY)
-    },
-    jsonSquares () {
-      let { children } = JSON.parse(this.jsonSquares)
-      this.squareProps.length = 0
-      let squares = children[0].children
-      for (let i = 0; i < squares.length; i++) {
-        this.pushNewSquare(squares[i].attrs)
-      }
-    },
-    squareProps () {
-      console.log('hey')
-      // this.dispatchJsonSquares()
     }
   },
   methods: {
     ...mapActions([
       'pushNewSquare',
-      'resetSquareProps'
+      'resetSquareProps',
+      'setSquareAtIndex'
     ]),
     async populateReactiveProperty (x, y) {
       this.resetSquareProps()
@@ -75,20 +63,18 @@ export default {
         }
       }
     },
-    dispatchJsonSquares () {
-      let stageJson = this.$refs.stage.getStage().toJSON()
-      this.$store.dispatch('setJsonSquares', stageJson)
-    },
     handleResize () {
       let { clientHeight, clientWidth } = this.$refs.canvas
       this.konvaConfig.width = clientWidth
       this.konvaConfig.height = clientHeight
     },
     handleClick (shape) {
+      // Update vuex
       const stage = shape.getStage()
       stage.setFill(this.brushColor)
       stage.draw()
-      this.dispatchJsonSquares()
+      
+      this.setSquareAtIndex({ attrs: stage.getAttrs(), index: stage.index })
     },
     handleScroll ({ deltaY }) {
       if (deltaY) {
@@ -117,7 +103,7 @@ export default {
     window.addEventListener('resize', this.handleResize)
     this.$refs.canvas.addEventListener('wheel', this.handleScroll)
     this.handleResize()
-    this.populateReactiveProperty(this.canvasX, this.canvasY).then(this.dispatchJsonSquares)
+    this.populateReactiveProperty(this.canvasX, this.canvasY)
   }
 }
 </script>
