@@ -59,10 +59,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'setCanvasX',
-      'setCanvasY'
-    ]),
+    ...mapActions(['setCanvasX', 'setCanvasY']),
     clearGrid () {
       console.log('clear')
     }

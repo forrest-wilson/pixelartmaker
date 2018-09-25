@@ -40,17 +40,17 @@ export default {
       this.init(this.canvasX, this.canvasY)
     },
     jsonSquares () {
-      let importedObject = JSON.parse(this.jsonSquares)
-      console.log(importedObject)
+      let { children } = JSON.parse(this.jsonSquares)
+      console.log(children[0])
       this.squareProps.length = 0
-      for (let i = 0; i < importedObject.children[0].children.length; i++) {
-        let child = importedObject.children[0].children[i]
+      for (let i = 0; i < children[0].children.length; i++) {
+        let child = children[0].children[i]
         this.squareProps.push(child.attrs)
       }
     }
   },
   methods: {
-    init (x, y) {
+    async init (x, y) {
       this.squareProps.length = 0
       for (let i = 0; i < y; i++) {
         for (let j = 0; j < x; j++) {
@@ -71,7 +71,7 @@ export default {
       }
     },
     handleResize () {
-      let { clientHeight, clientWidth } = this.$refs['canvas']
+      let { clientHeight, clientWidth } = this.$refs.canvas
       this.konvaConfig.width = clientWidth
       this.konvaConfig.height = clientHeight
     },
@@ -84,16 +84,16 @@ export default {
     },
     handleScroll ({ deltaY }) {
       if (deltaY) {
-        const stage = this.$refs['layer'].getStage()
+        const stage = this.$refs.layer.getStage()
         let opts = {}
         let factor = 0.1
 
         if (deltaY > 0) {
-          // Increase scale by 1
+          // Increase scale
           opts.x = stage.scaleX() + factor
           opts.y = stage.scaleY() + factor
         } else {
-          // Reduce scale by 1 if it isn't 1 already
+          // Reduce scale if it isn't 1 already
           if (stage.attrs.scaleX > 1 || stage.attrs.scaleY > 1) {
             opts.x = stage.scaleX() - factor
             opts.y = stage.scaleY() - factor
@@ -107,9 +107,12 @@ export default {
   },
   mounted () {
     window.addEventListener('resize', this.handleResize)
-    this.$refs['canvas'].addEventListener('wheel', this.handleScroll)
+    this.$refs.canvas.addEventListener('wheel', this.handleScroll)
     this.handleResize()
-    this.init(this.canvasX, this.canvasY)
+    this.init(this.canvasX, this.canvasY).then(() => {
+      let stageJson = this.$refs.stage.getStage().toJSON()
+      this.$store.dispatch('setJsonSquares', stageJson)
+    })
   }
 }
 </script>
