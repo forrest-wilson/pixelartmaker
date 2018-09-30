@@ -1,7 +1,7 @@
 const state = {
   canvas: {
-    x: 16,
-    y: 16
+    x: 4,
+    y: 4
   }
 }
 

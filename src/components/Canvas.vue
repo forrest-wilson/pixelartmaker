@@ -42,13 +42,14 @@ export default {
     ...mapActions([
       'pushNewSquare',
       'resetSquareProps',
-      'setSquareAtIndex'
+      'setSquareAtIndex',
+      'setSquareProps'
     ]),
     async populateReactiveProperty (x, y) {
-      this.resetSquareProps()
+      let newSquares = []
       for (let i = 0; i < y; i++) {
         for (let j = 0; j < x; j++) {
-          let multi = 25
+          let multi = 100
           let opts = {
             x: (multi * j),
             y: (multi * i),
@@ -59,9 +60,11 @@ export default {
             strokeWidth: 1
           }
 
-          this.pushNewSquare(opts)
+          newSquares.push(opts)
         }
       }
+
+      this.setSquareProps(newSquares)
     },
     handleResize () {
       let { clientHeight, clientWidth } = this.$refs.canvas
@@ -69,11 +72,10 @@ export default {
       this.konvaConfig.height = clientHeight
     },
     handleClick (shape) {
-      // Update vuex
       const stage = shape.getStage()
       stage.setFill(this.brushColor)
       stage.draw()
-      
+
       this.setSquareAtIndex({ attrs: stage.getAttrs(), index: stage.index })
     },
     handleScroll ({ deltaY }) {

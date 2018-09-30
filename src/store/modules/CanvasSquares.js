@@ -1,5 +1,5 @@
 const state = {
-  squareProps: [],
+  squareProps: []
 }
 
 const mutations = {
@@ -10,9 +10,10 @@ const mutations = {
     state.squareProps.length = 0
   },
   SET_SQUARE_PROPS (state, squares) {
+    state.squareProps.length = 0
     state.squareProps = squares
   },
-  SET_SQUARE_AT_INDEX(state, { attrs, index }) {
+  SET_SQUARE_AT_INDEX (state, { attrs, index }) {
     state.squareProps.splice(index, 1, attrs)
   }
 }
