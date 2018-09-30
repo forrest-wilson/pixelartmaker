@@ -125,7 +125,7 @@ export default {
     },
     handleScroll ({ deltaY }) {
       if (deltaY) {
-        const stage = this.$refs.layer.getStage()
+        const stage = this.$refs.stage.getStage()
         let opts = {}
         let factor = 0.1
 
