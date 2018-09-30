@@ -31,8 +31,32 @@ export default {
     })
   },
   watch: {
-    canvasX () {
-      this.populateReactiveProperty(this.canvasX, this.canvasY)
+    canvasX (to, from) {
+      // this.populateReactiveProperty(this.canvasX, this.canvasY)
+
+      // Add a check to see what direction the canvas is going
+      // If the new value minus the current value equals 1, we can assume the value is increasing
+      if (to - from === 1) {
+        console.log(to, from)
+        let tempArr = []
+        for (let i = 0; i < this.canvasY; i++) {
+          let multi = 100
+          let opts = {
+            x: (multi * (this.canvasX - 1)),
+            y: (multi * i),
+            width: multi,
+            height: multi,
+            stroke: 'black',
+            fill: 'white',
+            strokeWidth: 1
+          }
+
+          tempArr.push(opts)
+        }
+        this.pushNewSquares(tempArr)
+      } else {
+        console.log('negative direction, not implemented yet')
+      }
     },
     canvasY () {
       this.populateReactiveProperty(this.canvasX, this.canvasY)
@@ -41,6 +65,7 @@ export default {
   methods: {
     ...mapActions([
       'pushNewSquare',
+      'pushNewSquares',
       'resetSquareProps',
       'setSquareAtIndex',
       'setSquareProps'
