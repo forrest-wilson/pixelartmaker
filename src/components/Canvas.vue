@@ -20,7 +20,7 @@ export default {
         height: 0,
         draggable: true
       },
-      multi: 100
+      multi: 50
     }
   },
   computed: {
@@ -95,12 +95,11 @@ export default {
       for (let i = 0; i < y; i++) {
         let row = []
         for (let j = 0; j < x; j++) {
-          let multi = 100
           let opts = {
-            x: (multi * j),
-            y: (multi * i),
-            width: multi,
-            height: multi,
+            x: (this.multi * j),
+            y: (this.multi * i),
+            width: this.multi,
+            height: this.multi,
             stroke: 'black',
             fill: 'white',
             strokeWidth: 1
