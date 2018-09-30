@@ -120,9 +120,8 @@ export default {
       const stage = shape.getStage()
       stage.setFill(this.brushColor)
       stage.draw()
-      console.log(stage)
 
-      this.setSquareAtIndex({ attrs: stage.getAttrs(), index: stage.index })
+      this.setSquareAtIndex({ attrs: stage.getAttrs(), layerIndex: stage.parent.index, squareIndex: stage.index })
     },
     handleScroll ({ deltaY }) {
       if (deltaY) {

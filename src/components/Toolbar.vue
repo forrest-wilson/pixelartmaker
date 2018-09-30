@@ -12,7 +12,6 @@ export default {
   name: 'Toolbar',
   methods: {
     ...mapActions([
-      'setJsonSquares',
       'setSquareProps'
     ]),
     exportJson () {
@@ -41,7 +40,6 @@ export default {
   },
   computed: {
     ...mapGetters({
-      jsonSquares: 'getJsonSquaresStringified',
       squareProps: 'getSquareProps'
     })
   }

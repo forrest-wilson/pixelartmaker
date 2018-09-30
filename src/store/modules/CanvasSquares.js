@@ -20,8 +20,8 @@ const mutations = {
   SET_SQUARE_PROPS (state, squares) {
     state.squareProps = squares
   },
-  SET_SQUARE_AT_INDEX (state, { attrs, index }) {
-    state.squareProps.splice(index, 1, attrs)
+  SET_SQUARE_AT_INDEX (state, { attrs, layerIndex, squareIndex }) {
+    state.squareProps[layerIndex].splice(squareIndex, 1, attrs)
   }
 }
 

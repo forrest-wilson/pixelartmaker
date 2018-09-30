@@ -24,7 +24,6 @@ const actions = {
 }
 
 const getters = {
-  getCanvasDims: ({ canvas }) => canvas,
   getCanvasX: ({ canvas }) => canvas.x,
   getCanvasY: ({ canvas }) => canvas.y
 }
