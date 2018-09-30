@@ -15,8 +15,16 @@ export default {
       'setSquareProps'
     ]),
     exportJson () {
+      let applicationState = {
+        squareProps: this.squareProps,
+        canvas: {
+          x: this.canvasX,
+          y: this.canvasY
+        },
+        brushColor: this.brushColor
+      }
       let el = document.createElement('a')
-      el.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.squareProps))}`)
+      el.setAttribute('href', `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(applicationState))}`)
       el.setAttribute('download', 'data.json')
       el.click()
     },
@@ -40,7 +48,10 @@ export default {
   },
   computed: {
     ...mapGetters({
-      squareProps: 'getSquareProps'
+      squareProps: 'getSquareProps',
+      canvasX: 'getCanvasX',
+      canvasY: 'getCanvasY',
+      brushColor: 'getBrushColor'
     })
   }
 }
