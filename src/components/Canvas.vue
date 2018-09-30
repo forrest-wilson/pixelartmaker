@@ -1,8 +1,8 @@
 <template>
   <div class="canvas" ref="canvas">
     <v-stage :config="konvaConfig" ref="stage">
-      <v-layer ref="layer">
-        <v-rect v-for="square in squareProps" :key="square.id" :config="square" @click="handleClick"></v-rect>
+      <v-layer v-for="(row, i) in squareProps" :key="i" ref="layer">
+        <v-rect v-for="square in row" :key="square.id" :config="square" @click="handleClick"></v-rect>
       </v-layer>
     </v-stage>
   </div>
@@ -19,7 +19,8 @@ export default {
         width: 0,
         height: 0,
         draggable: true
-      }
+      },
+      multi: 100
     }
   },
   computed: {
@@ -32,47 +33,67 @@ export default {
   },
   watch: {
     canvasX (to, from) {
-      // this.populateReactiveProperty(this.canvasX, this.canvasY)
-
-      // Add a check to see what direction the canvas is going
-      // If the new value minus the current value equals 1, we can assume the value is increasing
-      if (to - from === 1) {
-        console.log(to, from)
-        let tempArr = []
-        for (let i = 0; i < this.canvasY; i++) {
-          let multi = 100
-          let opts = {
-            x: (multi * (this.canvasX - 1)),
-            y: (multi * i),
-            width: multi,
-            height: multi,
-            stroke: 'black',
-            fill: 'white',
-            strokeWidth: 1
+      if (!isNaN(to)) {
+        // Add a check to see what direction the canvas is going
+        // If the new value minus the current value equals 1, we can assume the value is increasing
+        if (to - from === 1) {
+          for (let i = 0; i < this.canvasY; i++) {
+            let opts = {
+              x: (this.multi * (this.canvasX - 1)),
+              y: (this.multi * i),
+              width: this.multi,
+              height: this.multi,
+              stroke: 'black',
+              fill: 'white',
+              strokeWidth: 1
+            }
+            this.pushNewSquare({ square: opts, index: i })
           }
-
-          tempArr.push(opts)
+        } else {
+          for (let i = 0; i < this.canvasY; i++) {
+            this.popSquare(i)
+          }
         }
-        this.pushNewSquares(tempArr)
       } else {
-        console.log('negative direction, not implemented yet')
+        console.log('NaN')
       }
     },
-    canvasY () {
-      this.populateReactiveProperty(this.canvasX, this.canvasY)
+    canvasY (to, from) {
+      if (!isNaN(to)) {
+        if (to - from === 1) {
+          let row = []
+          for (let i = 0; i < this.canvasX; i++) {
+            let opts = {
+              x: (this.multi * i),
+              y: ((this.multi * this.canvasY) - this.multi),
+              width: this.multi,
+              height: this.multi,
+              stroke: 'black',
+              fill: 'white',
+              strokeWidth: 1
+            }
+            row.push(opts)
+          }
+          this.pushNewRow(row)
+        } else {
+          this.popRow()
+        }
+      }
     }
   },
   methods: {
     ...mapActions([
       'pushNewSquare',
-      'pushNewSquares',
-      'resetSquareProps',
-      'setSquareAtIndex',
-      'setSquareProps'
+      'popSquare',
+      'pushNewRow',
+      'popRow',
+      'setSquareProps',
+      'setSquareAtIndex'
     ]),
     async populateReactiveProperty (x, y) {
-      let newSquares = []
+      let nestedArrays = []
       for (let i = 0; i < y; i++) {
+        let row = []
         for (let j = 0; j < x; j++) {
           let multi = 100
           let opts = {
@@ -84,12 +105,12 @@ export default {
             fill: 'white',
             strokeWidth: 1
           }
-
-          newSquares.push(opts)
+          row.push(opts)
         }
+        nestedArrays.push(row)
       }
 
-      this.setSquareProps(newSquares)
+      this.setSquareProps(nestedArrays)
     },
     handleResize () {
       let { clientHeight, clientWidth } = this.$refs.canvas
@@ -100,6 +121,7 @@ export default {
       const stage = shape.getStage()
       stage.setFill(this.brushColor)
       stage.draw()
+      console.log(stage)
 
       this.setSquareAtIndex({ attrs: stage.getAttrs(), index: stage.index })
     },

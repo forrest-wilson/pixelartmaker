@@ -1,19 +1,23 @@
 const state = {
+  // Model squareProps as a multidimensional array
+  // eg [[row 1 squares], [row 2 squares], [row 3 squares]]
   squareProps: []
 }
 
 const mutations = {
-  PUSH_NEW_SQUARE (state, square) {
-    state.squareProps.push(square)
+  PUSH_NEW_SQUARE (state, { square, index }) {
+    state.squareProps[index].push(square)
   },
-  PUSH_NEW_SQUARES (state, squares) {
-    state.squareProps = state.squareProps.concat(squares)
+  POP_SQUARE (state, index) {
+    state.squareProps[index].pop()
   },
-  RESET_SQUARE_PROPS (state) {
-    state.squareProps.length = 0
+  PUSH_NEW_ROW (state, row) {
+    state.squareProps.push(row)
+  },
+  POP_ROW (state) {
+    state.squareProps.pop()
   },
   SET_SQUARE_PROPS (state, squares) {
-    state.squareProps.length = 0
     state.squareProps = squares
   },
   SET_SQUARE_AT_INDEX (state, { attrs, index }) {
@@ -22,14 +26,17 @@ const mutations = {
 }
 
 const actions = {
-  pushNewSquare ({ commit }, square) {
-    commit('PUSH_NEW_SQUARE', square)
+  pushNewSquare ({ commit }, payload) {
+    commit('PUSH_NEW_SQUARE', payload)
   },
-  pushNewSquares ({ commit }, squares) {
-    commit('PUSH_NEW_SQUARES', squares)
+  popSquare ({ commit }, payload) {
+    commit('POP_SQUARE', payload)
   },
-  resetSquareProps ({ commit }) {
-    commit('RESET_SQUARE_PROPS')
+  pushNewRow ({ commit }, row) {
+    commit('PUSH_NEW_ROW', row)
+  },
+  popRow ({ commit }) {
+    commit('POP_ROW')
   },
   setSquareProps ({ commit }, squares) {
     commit('SET_SQUARE_PROPS', squares)
