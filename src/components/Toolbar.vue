@@ -42,10 +42,10 @@ export default {
       let reader = new FileReader()
       reader.onload = () => {
         let file = JSON.parse(reader.result)
-        this.setSquareProps(file.squareProps)
         this.setCanvasX(file.canvas.x)
         this.setCanvasY(file.canvas.y)
         this.setBrushColor(file.brushColor)
+        this.setSquareProps(file.squareProps)
         console.log(file)
       }
 

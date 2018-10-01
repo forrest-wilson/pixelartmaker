@@ -35,34 +35,35 @@ export default {
   },
   watch: {
     canvasX (to, from) {
+      // If 'to' is a number, continue
       if (!isNaN(to)) {
-        // Add a check to see what direction the canvas is going
-        if (to > from) {
-          console.log(`counting up from ${from} to ${to}`)
-          for (let i = from; i < to; i++) {
-            let column = []
-            for (let j = 0; j < this.canvasY; j++) {
-              let opts = {
-                x: (this.multi * i),
-                y: (this.multi * j),
-                width: this.multi,
-                height: this.multi,
-                stroke: 'black',
-                fill: 'white',
-                strokeWidth: 1
+        // If canvasX and the length of a row are the same, it means the user
+        // has imported a file and canvas re-rendering isn't needed
+        if (this.canvasX !== this.squareProps[0].length) {
+          // Add a check to see what direction the canvas is going
+          if (to > from) {
+            for (let i = from; i < to; i++) {
+              let column = []
+              for (let j = 0; j < this.canvasY; j++) {
+                let opts = {
+                  x: (this.multi * i),
+                  y: (this.multi * j),
+                  width: this.multi,
+                  height: this.multi,
+                  stroke: 'black',
+                  fill: 'white',
+                  strokeWidth: 1
+                }
+                column.push(opts)
               }
-              column.push(opts)
+              this.pushNewColumn(column)
             }
-            this.pushNewColumn(column)
           }
-        }
 
-        if (to < from) {
-          console.log(`counting down from ${from} to ${to}`)
-          for (let i = from - 1; i >= to; i--) {
-            console.log(`popping column ${i}`)
-            console.log(i)
-            this.popColumn(i)
+          if (to < from) {
+            for (let i = from - 1; i >= to; i--) {
+              this.popColumn(i)
+            }
           }
         }
       } else {
@@ -70,32 +71,35 @@ export default {
       }
     },
     canvasY (to, from) {
+      // If 'to' is a number, continue
       if (!isNaN(to)) {
-        // Add a check to see what direction the canvas is going
-        if (to > from) {
-          console.log(`counting up from ${from} to ${to}`)
-          for (let i = from; i < to; i++) {
-            let row = []
-            for (let j = 0; j < this.canvasX; j++) {
-              let opts = {
-                x: (this.multi * j),
-                y: (this.multi * i),
-                width: this.multi,
-                height: this.multi,
-                stroke: 'black',
-                fill: 'white',
-                strokeWidth: 1
+        // If canvasY and the length of a column are the same, it means the user
+        // has imported a file and canvas re-rendering isn't needed
+        if (this.canvasY !== this.squareProps.length) {
+          // Add a check to see what direction the canvas is going
+          if (to > from) {
+            for (let i = from; i < to; i++) {
+              let row = []
+              for (let j = 0; j < this.canvasX; j++) {
+                let opts = {
+                  x: (this.multi * j),
+                  y: (this.multi * i),
+                  width: this.multi,
+                  height: this.multi,
+                  stroke: 'black',
+                  fill: 'white',
+                  strokeWidth: 1
+                }
+                row.push(opts)
               }
-              row.push(opts)
+              this.pushNewRow(row)
             }
-            this.pushNewRow(row)
           }
-        }
 
-        if (to < from) {
-          console.log(`counting down from ${from} to ${to}`)
-          for (let i = from - 1; i >= to; i--) {
-            this.popRow(i)
+          if (to < from) {
+            for (let i = from - 1; i >= to; i--) {
+              this.popRow(i)
+            }
           }
         }
       }
