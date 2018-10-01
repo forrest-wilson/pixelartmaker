@@ -35,23 +35,32 @@ export default {
     canvasX (to, from) {
       if (!isNaN(to)) {
         // Add a check to see what direction the canvas is going
-        // If the new value minus the current value equals 1, we can assume the value is increasing
-        if (to - from === 1) {
-          for (let i = 0; i < this.canvasY; i++) {
-            let opts = {
-              x: (this.multi * (this.canvasX - 1)),
-              y: (this.multi * i),
-              width: this.multi,
-              height: this.multi,
-              stroke: 'black',
-              fill: 'white',
-              strokeWidth: 1
+        if (to > from) {
+          console.log(`counting up from ${from} to ${to}`)
+          for (let i = from; i < to; i++) {
+            let column = []
+            for (let j = 0; j < this.canvasY; j++) {
+              let opts = {
+                x: (this.multi * i),
+                y: (this.multi * j),
+                width: this.multi,
+                height: this.multi,
+                stroke: 'black',
+                fill: 'white',
+                strokeWidth: 1
+              }
+              column.push(opts)
             }
-            this.pushNewSquare({ square: opts, index: i })
+            this.pushNewColumn(column)
           }
-        } else {
-          for (let i = 0; i < this.canvasY; i++) {
-            this.popSquare(i)
+        }
+
+        if (to < from) {
+          console.log(`counting down from ${from} to ${to}`)
+          for (let i = from - 1; i >= to; i--) {
+            console.log(`popping column ${i}`)
+            console.log(i)
+            this.popColumn(i)
           }
         }
       } else {
@@ -60,23 +69,32 @@ export default {
     },
     canvasY (to, from) {
       if (!isNaN(to)) {
-        if (to - from === 1) {
-          let row = []
-          for (let i = 0; i < this.canvasX; i++) {
-            let opts = {
-              x: (this.multi * i),
-              y: ((this.multi * this.canvasY) - this.multi),
-              width: this.multi,
-              height: this.multi,
-              stroke: 'black',
-              fill: 'white',
-              strokeWidth: 1
+        // Add a check to see what direction the canvas is going
+        if (to > from) {
+          console.log(`counting up from ${from} to ${to}`)
+          for (let i = from; i < to; i++) {
+            let row = []
+            for (let j = 0; j < this.canvasX; j++) {
+              let opts = {
+                x: (this.multi * j),
+                y: (this.multi * i),
+                width: this.multi,
+                height: this.multi,
+                stroke: 'black',
+                fill: 'white',
+                strokeWidth: 1
+              }
+              row.push(opts)
             }
-            row.push(opts)
+            this.pushNewRow(row)
           }
-          this.pushNewRow(row)
-        } else {
-          this.popRow()
+        }
+
+        if (to < from) {
+          console.log(`counting down from ${from} to ${to}`)
+          for (let i = from - 1; i >= to; i--) {
+            this.popRow(i)
+          }
         }
       }
     }
@@ -87,6 +105,8 @@ export default {
       'popSquare',
       'pushNewRow',
       'popRow',
+      'pushNewColumn',
+      'popColumn',
       'setSquareProps',
       'setSquareAtIndex'
     ]),

@@ -17,6 +17,16 @@ const mutations = {
   POP_ROW (state) {
     state.squareProps.pop()
   },
+  PUSH_NEW_COLUMN (state, column) {
+    for (let i = 0; i < state.squareProps.length; i++) {
+      state.squareProps[i].push(column[i])
+    }
+  },
+  POP_COLUMN (state) {
+    for (let i = 0; i < state.squareProps.length; i++) {
+      state.squareProps[i].pop()
+    }
+  },
   SET_SQUARE_PROPS (state, squares) {
     state.squareProps = squares
   },
@@ -37,6 +47,12 @@ const actions = {
   },
   popRow ({ commit }) {
     commit('POP_ROW')
+  },
+  pushNewColumn ({ commit }, column) {
+    commit('PUSH_NEW_COLUMN', column)
+  },
+  popColumn ({ commit }) {
+    commit('POP_COLUMN')
   },
   setSquareProps ({ commit }, squares) {
     commit('SET_SQUARE_PROPS', squares)
