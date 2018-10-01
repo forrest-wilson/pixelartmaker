@@ -1,8 +1,10 @@
 <template>
   <div class="canvas" ref="canvas">
     <v-stage :config="konvaConfig" ref="stage">
-      <v-layer v-for="(row, i) in squareProps" :key="i" ref="layer">
-        <v-rect v-for="square in row" :key="square.id" :config="square" @click="handleClick"></v-rect>
+      <v-layer ref="layer">
+        <div v-for="(row, i) in squareProps" :key="i">
+          <v-rect v-for="square in row" :key="square.id" :config="square" @click="handleClick"></v-rect>
+        </div>
       </v-layer>
     </v-stage>
   </div>
