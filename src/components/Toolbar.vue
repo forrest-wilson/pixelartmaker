@@ -12,7 +12,10 @@ export default {
   name: 'Toolbar',
   methods: {
     ...mapActions([
-      'setSquareProps'
+      'setSquareProps',
+      'setCanvasX',
+      'setCanvasY',
+      'setBrushColor'
     ]),
     exportJson () {
       let applicationState = {
@@ -38,9 +41,12 @@ export default {
       console.log('importing JSON')
       let reader = new FileReader()
       reader.onload = () => {
-        let json = JSON.parse(reader.result)
-        this.setSquareProps(json)
-        console.log(json)
+        let file = JSON.parse(reader.result)
+        this.setSquareProps(file.squareProps)
+        this.setCanvasX(file.canvas.x)
+        this.setCanvasY(file.canvas.y)
+        this.setBrushColor(file.brushColor)
+        console.log(file)
       }
 
       reader.readAsText(target.files[0])
